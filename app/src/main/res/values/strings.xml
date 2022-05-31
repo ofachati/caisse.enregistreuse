@@ -1,0 +1,7 @@
+<resources>
+    <string name="app_name">caisse.V4</string>
+    <string name="title_activity_navigation">NavigationActivity</string>
+    <string name="title_catalogue">Catalogue</string>
+    <string name="title_panier">Panier</string>
+    <string name="title_statistiques">Statistiques</string>
+</resources>

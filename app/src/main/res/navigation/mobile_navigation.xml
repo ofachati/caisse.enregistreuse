@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/mobile_navigation"
+    app:startDestination="@+id/navigation_catalogue">
+
+    <fragment
+        android:id="@+id/navigation_catalogue"
+        android:name="com.example.caissev4.model.ui.catalogue.CatalogueFragment"
+        android:label="@string/title_catalogue"
+        tools:layout="@layout/fragment_catalogue" />
+
+    <fragment
+        android:id="@+id/navigation_panier"
+        android:name="com.example.caissev4.model.ui.panier.PanierFragment"
+        android:label="@string/title_panier"
+        tools:layout="@layout/fragment_panier" />
+
+    <fragment
+        android:id="@+id/navigation_statistiques"
+        android:name="com.example.caissev4.model.ui.statistiques.StatistiquesFragment"
+        android:label="@string/title_statistiques"
+        tools:layout="@layout/fragment_statistiques" />
+</navigation>

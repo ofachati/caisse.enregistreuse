@@ -1,0 +1,134 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".ProductActivity">
+
+
+
+    <ImageView
+        android:id="@+id/back2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/ic_arrow_back_black_24dp" />
+
+    <TextView
+        android:id="@+id/textView8"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/open_sans"
+        android:text="Ajouter un produit"
+        android:textColor="@android:color/background_dark"
+        app:layout_constraintBottom_toBottomOf="@+id/back2"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/back2" />
+
+    <ImageView
+        android:id="@+id/big_image"
+        android:layout_width="340dp"
+        android:layout_height="340dp"
+        android:layout_marginTop="32dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/back2"
+        app:srcCompat="@drawable/addpicture" />
+
+
+    <EditText
+        android:id="@+id/edittext_TitreProduit"
+        android:layout_width="215dp"
+        android:layout_height="50dp"
+        android:layout_marginTop="15dp"
+        android:background="@drawable/search_bg"
+        android:ems="10"
+        android:fontFamily="@font/open_sans_bold"
+        android:hint="Nom du produit"
+        android:inputType="textPersonName"
+        android:textSize="14sp"
+        app:layout_constraintStart_toStartOf="@+id/big_image"
+        app:layout_constraintTop_toBottomOf="@+id/big_image" />
+
+    <EditText
+        android:id="@+id/edittext_DescProduit"
+        android:layout_width="338dp"
+        android:layout_height="103dp"
+        android:layout_marginTop="15dp"
+        android:background="@drawable/search_bg"
+        android:ems="10"
+        android:fontFamily="@font/open_sans_bold"
+        android:hint="Description"
+        android:inputType="textPersonName"
+        android:textSize="14sp"
+        app:layout_constraintEnd_toEndOf="@+id/edittext_QtyProduit"
+        app:layout_constraintStart_toStartOf="@+id/edittext_TitreProduit"
+        app:layout_constraintTop_toBottomOf="@+id/edittext_TitreProduit" />
+
+    <EditText
+        android:id="@+id/edittext_PrixVente"
+        android:layout_width="151dp"
+        android:layout_height="50dp"
+        android:background="@drawable/search_bg"
+        android:ems="10"
+        android:fontFamily="@font/open_sans_bold"
+        android:hint="Prix de vente"
+        android:inputType="number"
+        android:textSize="14sp"
+        app:layout_constraintBottom_toBottomOf="@+id/edittext_PrixAchat"
+        app:layout_constraintEnd_toEndOf="@+id/edittext_DescProduit"
+        app:layout_constraintTop_toTopOf="@+id/edittext_PrixAchat"
+        app:layout_constraintVertical_bias="0.0" />
+
+    <EditText
+        android:id="@+id/edittext_PrixAchat"
+        android:layout_width="158dp"
+        android:layout_height="50dp"
+        android:layout_marginTop="15dp"
+        android:background="@drawable/search_bg"
+        android:ems="10"
+        android:fontFamily="@font/open_sans_bold"
+        android:hint="prix d'achat"
+        android:inputType="number"
+        android:textSize="14sp"
+        app:layout_constraintStart_toStartOf="@+id/edittext_DescProduit"
+        app:layout_constraintTop_toBottomOf="@+id/edittext_DescProduit" />
+
+    <EditText
+        android:id="@+id/edittext_QtyProduit"
+        android:layout_width="93dp"
+        android:layout_height="50dp"
+        android:background="@drawable/search_bg"
+        android:ems="10"
+        android:fontFamily="@font/open_sans_bold"
+        android:hint="quantité"
+        android:inputType="number"
+        android:textSize="14sp"
+        app:layout_constraintBottom_toBottomOf="@+id/edittext_TitreProduit"
+        app:layout_constraintEnd_toEndOf="@+id/big_image"
+        app:layout_constraintTop_toTopOf="@+id/edittext_TitreProduit"
+        app:layout_constraintVertical_bias="1.0" />
+
+    <Button
+        android:id="@+id/btn_EnregistrerProduit"
+        android:layout_width="183dp"
+        android:layout_height="44dp"
+        android:layout_marginTop="16dp"
+        android:background="@drawable/buy_now_bg"
+        android:fontFamily="@font/open_sans_semibold"
+        android:text="Enregistrer"
+        android:textColor="#FFFFFF"
+        android:textSize="20dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/edittext_PrixVente" />
+
+
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>
