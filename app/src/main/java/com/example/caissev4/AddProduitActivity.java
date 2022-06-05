@@ -8,6 +8,7 @@ import android.database.sqlite.SQLiteException;
 import android.graphics.Bitmap;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
+import android.net.Uri;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
@@ -30,19 +31,10 @@ public class AddProduitActivity extends AppCompatActivity {
 
     ImageView imageview_image, back;
     TextView edittext_Nom, edittext_prixVente,edittext_prixAchat, edittext_description, edittext_quantite;
-
-    //int imageviccccccccccccccchangatcew_image;
-
-
-    Datamanager myDatabase =new Datamanager(this);
-
-
-
-
-//partie pour capturer un image
+    DataManager myDatabase =new DataManager(this);
     Intent intent ;
     public  static final int RequestPermissionCode  = 1 ;
-//
+
 
 
     @Override
@@ -50,31 +42,14 @@ public class AddProduitActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_produit);
 
-
-
         edittext_Nom = findViewById(R.id.edittext_TitreProduit);
         edittext_description = findViewById(R.id.edittext_DescProduit);
         edittext_prixVente = findViewById(R.id.edittext_PrixVente);
         edittext_prixAchat = findViewById(R.id.edittext_PrixAchat);
-
         edittext_quantite = findViewById(R.id.edittext_QtyProduit);
         Button buttonInserer = findViewById(R.id.btn_EnregistrerProduit);
         imageview_image=findViewById(R.id.big_image);
-        //Button buttonRechercher = findViewById(R.id.idrechercher);
-        //Button buttonsupprimer = findViewById(R.id.idsupprimer);
-
-        /*
-        proName = findViewById(R.id.productName);
-        proDesc = findViewById(R.id.prodDesc);
-        proPrice = findViewById(R.id.prodPrice);
-        img = findViewById(R.id.big_image);
-        proQty = findViewById(R.id.qty);
-*/
         back = findViewById(R.id.back2);
-
-
-
-        //img.setImageResource(image);
 
 
         back.setOnClickListener(new View.OnClickListener() {
@@ -96,8 +71,10 @@ public class AddProduitActivity extends AppCompatActivity {
         imageview_image.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                intent = new Intent(android.provider.MediaStore.ACTION_IMAGE_CAPTURE);
-                startActivityForResult(intent, 7);
+                //intent = new Intent(android.provider.MediaStore.ACTION_IMAGE_CAPTURE);
+                //startActivityForResult(intent, 7);
+                intent = new Intent(Intent.ACTION_PICK,android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+                startActivityForResult(intent , 1);
 
             }
         });
@@ -125,6 +102,7 @@ public class AddProduitActivity extends AppCompatActivity {
                         System.out.println("hahyaaa");
                         System.out.println(Arrays.toString(imageInByte));
 */
+
                         String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss", Locale.ENGLISH).format(new Date());
                         File pictureFile = new File("/sdcard/Android/media", "IMG_" + timeStamp + ".jpg");
                         FileOutputStream fos = new FileOutputStream(pictureFile);
@@ -135,6 +113,9 @@ public class AddProduitActivity extends AppCompatActivity {
                         String imagePath = pictureFile.getAbsolutePath();
                         System.out.println(imagePath);
                         myDatabase.inserer_produit(nom, description, Double.parseDouble(prixAchat),Double.parseDouble(prixVente), Integer.parseInt(quantite),imagePath);
+                        Intent i = new Intent(AddProduitActivity.this, NavigationActivity.class);
+                        startActivity(i);
+                        finish();
                     } catch (SQLiteException | IOException s) {
                         s.printStackTrace();
                     }
@@ -149,7 +130,7 @@ public class AddProduitActivity extends AppCompatActivity {
 
 
 
-
+/*
     //3 methode pour prendre la permission de la camera et enregistrer l'image dans imageview
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
@@ -157,14 +138,13 @@ public class AddProduitActivity extends AppCompatActivity {
             Bitmap bitmap = (Bitmap) data.getExtras().get("data");
             imageview_image.setImageBitmap(bitmap);
         }
-    }
-
+    }*/
     public void EnableRuntimePermission(){
         if (ActivityCompat.shouldShowRequestPermissionRationale(AddProduitActivity.this, Manifest.permission.CAMERA))
         {
             Toast.makeText(AddProduitActivity.this,"CAMERA permission allows us to Access CAMERA app", Toast.LENGTH_LONG).show();
         } else {
-            ActivityCompat.requestPermissions(AddProduitActivity.this,new String[]{Manifest.permission.CAMERA,Manifest.permission.WRITE_EXTERNAL_STORAGE}, RequestPermissionCode);
+                ActivityCompat.requestPermissions(AddProduitActivity.this,new String[]{Manifest.permission.CAMERA,Manifest.permission.READ_EXTERNAL_STORAGE,Manifest.permission.WRITE_EXTERNAL_STORAGE}, RequestPermissionCode);
         }
 /*
         if (ActivityCompat.shouldShowRequestPermissionRationale(AddProduitActivity.this, Manifest.permission.WRITE_EXTERNAL_STORAGE))
@@ -192,4 +172,24 @@ public class AddProduitActivity extends AppCompatActivity {
     }
 
 
+
+
+    protected void onActivityResult(int requestCode, int resultCode, Intent imageReturnedIntent) {
+        super.onActivityResult(requestCode, resultCode, imageReturnedIntent);
+        switch(requestCode) {
+            case 0:
+                if(resultCode == RESULT_OK){
+                    Uri selectedImage = imageReturnedIntent.getData();
+                    imageview_image.setImageURI(selectedImage);
+                }
+
+                break;
+            case 1:
+                if(resultCode == RESULT_OK){
+                    Uri selectedImage = imageReturnedIntent.getData();
+                    imageview_image.setImageURI(selectedImage);
+                }
+                break;
+        }
+    }
 }

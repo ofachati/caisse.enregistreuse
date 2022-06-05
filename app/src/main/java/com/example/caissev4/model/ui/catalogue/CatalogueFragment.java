@@ -19,15 +19,12 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.caissev4.AddProduitActivity;
-import com.example.caissev4.Datamanager;
+import com.example.caissev4.DataManager;
 import com.example.caissev4.MainActivity;
-import com.example.caissev4.adapter.CategoryAdapter;
 import com.example.caissev4.adapter.ProduitAdapter;
 import com.example.caissev4.databinding.FragmentCatalogueBinding;
-import com.example.caissev4.model.Category;
 import com.example.caissev4.model.Produit;
 
-import java.util.ArrayList;
 import java.util.List;
 import com.example.caissev4.R;
 import com.google.firebase.auth.FirebaseAuth;
@@ -38,23 +35,12 @@ public class CatalogueFragment extends Fragment {
     private FragmentCatalogueBinding binding;
 
 
-    //----------------------
     Button btn_AddProduit;
-    //
     Context thiscontext;
-    //
-    RecyclerView categoryRecyclerView, produitRecycler;
-
-    CategoryAdapter categoryAdapter;
-    List<Category> categoryList;
-
+    RecyclerView produitRecycler;
     ProduitAdapter produitAdapter;
     List<Produit> produitList;
-
-
-    //
-    Datamanager myDatabase ;
-    //
+    DataManager myDatabase ;
     FirebaseAuth mAuth;
     ImageView logout;
     //----------------------
@@ -64,7 +50,7 @@ public class CatalogueFragment extends Fragment {
 
         //---
         thiscontext = container.getContext();
-        myDatabase =new Datamanager(thiscontext);
+        myDatabase =new DataManager(thiscontext);
         //-----
 
         homeViewModel =
@@ -85,7 +71,6 @@ public class CatalogueFragment extends Fragment {
 
 
         //hna zdt root ..........................................................................  !!!
-        categoryRecyclerView = root.findViewById(R.id.categoryRecycler);
         //allCategory = root.findViewById(R.id.allCategoryImage);
         produitRecycler = root.findViewById(R.id.recently_item);
 
@@ -99,23 +84,12 @@ public class CatalogueFragment extends Fragment {
         });
 */
 
-        // adding data to model
-        categoryList = new ArrayList<>();
-        categoryList.add(new Category(1, R.drawable.ic_home_fruits));
-        categoryList.add(new Category(2, R.drawable.ic_home_fruits));
-        categoryList.add(new Category(3, R.drawable.ic_home_fruits));
-        categoryList.add(new Category(4, R.drawable.ic_home_fruits));
-        categoryList.add(new Category(5, R.drawable.ic_home_fruits));
-        categoryList.add(new Category(6, R.drawable.ic_home_fruits));
-        categoryList.add(new Category(7, R.drawable.ic_home_fruits));
-        categoryList.add(new Category(8, R.drawable.ic_home_fruits));
 
         // adding data to model
         produitList =myDatabase.getProducts("SELECT * FROM Produit");
 
 
 
-        setCategoryRecycler(categoryList,thiscontext);
         setProduitRecycler(produitList,thiscontext);
 
         //
@@ -130,9 +104,8 @@ public class CatalogueFragment extends Fragment {
         //---------------------------
 
         //deconnection de la session
-
         mAuth = FirebaseAuth.getInstance();
-        logout = root.findViewById(R.id.imageView2);
+        logout = root.findViewById(R.id.img_LogOut);
         logout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -172,13 +145,6 @@ public class CatalogueFragment extends Fragment {
 
 
 
-
-    private void setCategoryRecycler(List<Category> categoryDataList, Context thiscontext) {
-        RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(thiscontext, LinearLayoutManager.HORIZONTAL, false);
-        categoryRecyclerView.setLayoutManager(layoutManager);
-        categoryAdapter = new CategoryAdapter(thiscontext,categoryDataList);
-        categoryRecyclerView.setAdapter(categoryAdapter);
-    }
 
     private void setProduitRecycler(List<Produit> produitDataList, Context thiscontext) {
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(thiscontext, LinearLayoutManager.HORIZONTAL, false);

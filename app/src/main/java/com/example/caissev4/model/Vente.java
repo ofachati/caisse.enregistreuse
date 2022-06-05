@@ -2,10 +2,10 @@ package com.example.caissev4.model;
 
 public class Vente {
 
-    int id_vente;
-    String etat;
-    String date;
-    Produit produit;
+    private int id_vente;
+    private String etat;
+    private String date;
+    private Produit produit;
 
     public Vente(int id_vente, Produit produit, String etat, String date ) {
         this.id_vente = id_vente;

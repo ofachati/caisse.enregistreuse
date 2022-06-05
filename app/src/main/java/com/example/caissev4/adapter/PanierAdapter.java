@@ -9,17 +9,17 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.caissev4.Datamanager;
-import com.example.caissev4.model.Produit;
+import com.example.caissev4.DataManager;
+
 import org.jetbrains.annotations.NotNull;
 import java.util.List;
 import com.example.caissev4.R;
 import com.example.caissev4.model.Vente;
 
-public class PanierAdapter extends RecyclerView.Adapter<PanierAdapter.myviewholder>
+public class PanierAdapter extends RecyclerView.Adapter<PanierAdapter.PanierViewHolder>
 {
     List<Vente> liste_ventes;
-    Datamanager myDatabase ;
+    DataManager myDatabase ;
     TextView rateview;
     public PanierAdapter(List<Vente> liste_ventes, TextView rateview) {
         this.liste_ventes = liste_ventes;
@@ -29,13 +29,13 @@ public class PanierAdapter extends RecyclerView.Adapter<PanierAdapter.myviewhold
     @NonNull
     @NotNull
     @Override
-    public myviewholder onCreateViewHolder(@NonNull @NotNull ViewGroup parent, int viewType) {
+    public PanierViewHolder onCreateViewHolder(@NonNull @NotNull ViewGroup parent, int viewType) {
         View view= LayoutInflater.from(parent.getContext()).inflate(R.layout.panier_items,parent,false);
-        return new myviewholder(view);
+        return new PanierViewHolder(view);
     }
 
     @Override
-    public void onBindViewHolder(@NonNull @NotNull PanierAdapter.myviewholder holder, @SuppressLint("RecyclerView") int position) {
+    public void onBindViewHolder(@NonNull @NotNull PanierViewHolder holder, @SuppressLint("RecyclerView") int position) {
 
 
        holder.recid.setText(String.valueOf(liste_ventes.get(position).getId_vente()));
@@ -43,7 +43,7 @@ public class PanierAdapter extends RecyclerView.Adapter<PanierAdapter.myviewhold
        holder.recpprice.setText(String.valueOf(liste_ventes.get(position).getProduit().getPrix_vente()));
 
         //
-        myDatabase =new Datamanager(rateview.getContext());
+        myDatabase =new DataManager(rateview.getContext());
         //
 
        holder.delbtn.setOnClickListener(new View.OnClickListener() {
@@ -63,11 +63,11 @@ public class PanierAdapter extends RecyclerView.Adapter<PanierAdapter.myviewhold
         return liste_ventes.size();
     }
 
-    class myviewholder extends RecyclerView.ViewHolder
+    class PanierViewHolder extends RecyclerView.ViewHolder
     {
         TextView recid,recpname, recpprice;
         ImageButton delbtn;
-        public myviewholder(@NonNull @NotNull View itemView) {
+        public PanierViewHolder(@NonNull @NotNull View itemView) {
             super(itemView);
 
             recid=itemView.findViewById(R.id.recid);
@@ -84,7 +84,7 @@ public class PanierAdapter extends RecyclerView.Adapter<PanierAdapter.myviewhold
         for(i=0; i< liste_ventes.size(); i++)
             sum=sum+ liste_ventes.get(i).getProduit().getPrix_vente();
 
-        rateview.setText("Total Amount : Euro " + sum);
+        rateview.setText("Total Amount : " + sum +" €");
     }
 
 }

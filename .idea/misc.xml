@@ -24,15 +24,15 @@
         <entry key="..\:/Users/omarf/AndroidStudioProjects/caisseV4/app/src/main/res/font/open_sans_bold.xml" value="0.1" />
         <entry key="..\:/Users/omarf/AndroidStudioProjects/caisseV4/app/src/main/res/font/open_sans_light.xml" value="0.1" />
         <entry key="..\:/Users/omarf/AndroidStudioProjects/caisseV4/app/src/main/res/font/open_sans_semibold.xml" value="0.1" />
-        <entry key="..\:/Users/omarf/AndroidStudioProjects/caisseV4/app/src/main/res/layout/activity_add_produit.xml" value="0.264" />
+        <entry key="..\:/Users/omarf/AndroidStudioProjects/caisseV4/app/src/main/res/layout/activity_add_produit.xml" value="0.176" />
         <entry key="..\:/Users/omarf/AndroidStudioProjects/caisseV4/app/src/main/res/layout/activity_add_produit2.xml" value="0.13020833333333334" />
         <entry key="..\:/Users/omarf/AndroidStudioProjects/caisseV4/app/src/main/res/layout/activity_all_category.xml" value="0.13020833333333334" />
-        <entry key="..\:/Users/omarf/AndroidStudioProjects/caisseV4/app/src/main/res/layout/activity_main.xml" value="0.536" />
+        <entry key="..\:/Users/omarf/AndroidStudioProjects/caisseV4/app/src/main/res/layout/activity_main.xml" value="0.264" />
         <entry key="..\:/Users/omarf/AndroidStudioProjects/caisseV4/app/src/main/res/layout/activity_navigation.xml" value="0.2" />
         <entry key="..\:/Users/omarf/AndroidStudioProjects/caisseV4/app/src/main/res/layout/activity_product_details.xml" value="0.264" />
         <entry key="..\:/Users/omarf/AndroidStudioProjects/caisseV4/app/src/main/res/layout/all_category_row_items.xml" value="0.1953125" />
         <entry key="..\:/Users/omarf/AndroidStudioProjects/caisseV4/app/src/main/res/layout/category_row_items.xml" value="0.1953125" />
-        <entry key="..\:/Users/omarf/AndroidStudioProjects/caisseV4/app/src/main/res/layout/fragment_catalogue.xml" value="0.176" />
+        <entry key="..\:/Users/omarf/AndroidStudioProjects/caisseV4/app/src/main/res/layout/fragment_catalogue.xml" value="0.264" />
         <entry key="..\:/Users/omarf/AndroidStudioProjects/caisseV4/app/src/main/res/layout/fragment_dashboard.xml" value="0.264" />
         <entry key="..\:/Users/omarf/AndroidStudioProjects/caisseV4/app/src/main/res/layout/fragment_home.xml" value="0.25416666666666665" />
         <entry key="..\:/Users/omarf/AndroidStudioProjects/caisseV4/app/src/main/res/layout/fragment_notifications.xml" value="0.25416666666666665" />
@@ -40,7 +40,7 @@
         <entry key="..\:/Users/omarf/AndroidStudioProjects/caisseV4/app/src/main/res/layout/fragment_statistiques.xml" value="0.264" />
         <entry key="..\:/Users/omarf/AndroidStudioProjects/caisseV4/app/src/main/res/layout/hhhhhhh.xml" value="0.2" />
         <entry key="..\:/Users/omarf/AndroidStudioProjects/caisseV4/app/src/main/res/layout/panier_items.xml" value="0.2" />
-        <entry key="..\:/Users/omarf/AndroidStudioProjects/caisseV4/app/src/main/res/layout/produit_items.xml" value="0.6" />
+        <entry key="..\:/Users/omarf/AndroidStudioProjects/caisseV4/app/src/main/res/layout/produit_items.xml" value="0.8800000000000001" />
         <entry key="..\:/Users/omarf/AndroidStudioProjects/caisseV4/app/src/main/res/layout/recently_viewed_items.xml" value="0.13020833333333334" />
         <entry key="..\:/Users/omarf/AndroidStudioProjects/caisseV4/app/src/main/res/layout/singlerowdesign.xml" value="0.223731884057971" />
         <entry key="..\:/Users/omarf/AndroidStudioProjects/caisseV4/app/src/main/res/menu/bottom_nav_menu.xml" value="0.2" />

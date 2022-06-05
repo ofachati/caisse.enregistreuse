@@ -1,16 +1,13 @@
 package com.example.caissev4.model.ui.panier;
 
 import android.content.Context;
-import android.database.sqlite.SQLiteException;
-import android.graphics.Bitmap;
-import android.graphics.drawable.BitmapDrawable;
-import android.graphics.drawable.Drawable;
+import android.content.Intent;
 import android.os.Bundle;
-import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -19,15 +16,16 @@ import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.caissev4.Datamanager;
+import com.example.caissev4.AddProduitActivity;
+import com.example.caissev4.DataManager;
+import com.example.caissev4.MainActivity;
+import com.example.caissev4.NavigationActivity;
 import com.example.caissev4.R;
 import com.example.caissev4.adapter.PanierAdapter;
 import com.example.caissev4.databinding.FragmentPanierBinding;
-import com.example.caissev4.model.Produit;
 import com.example.caissev4.model.Vente;
+import com.google.firebase.auth.FirebaseAuth;
 
-import java.io.ByteArrayOutputStream;
-import java.util.Arrays;
 import java.util.List;
 
 public class PanierFragment extends Fragment {
@@ -35,7 +33,7 @@ public class PanierFragment extends Fragment {
     //
     RecyclerView recview;
     TextView rateview;
-    Datamanager myDatabase ;
+    DataManager myDatabase ;
     Context thiscontext;
 
     //
@@ -48,8 +46,9 @@ public class PanierFragment extends Fragment {
 
         //---
         thiscontext = container.getContext();
-        myDatabase =new Datamanager(thiscontext);
-
+        myDatabase =new DataManager(thiscontext);
+        FirebaseAuth mAuth;
+        ImageView logout;
         //-----
 
         
@@ -73,18 +72,35 @@ public class PanierFragment extends Fragment {
      */
         //
         rateview=root.findViewById(R.id.rateview);
-        getroomdata(thiscontext,root);
+        getpanierdata(thiscontext,root);
 
 
         //
         Button boutton_checkout = root.findViewById(R.id.btn_checkout);
-
         boutton_checkout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 myDatabase.vendre();
+                Intent i = new Intent(thiscontext, NavigationActivity.class);
+                startActivity(i);
+                getActivity().finish();
+
             }
         });
+
+        //deconnection de la session
+        mAuth = FirebaseAuth.getInstance();
+        logout = root.findViewById(R.id.img_LogOut);
+        logout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (mAuth.getCurrentUser() != null){
+                    mAuth.signOut();
+                    startActivity(new Intent(getActivity(), MainActivity.class));}
+                // finish();
+            }
+        });
+
         //
         return root;
     }
@@ -95,24 +111,18 @@ public class PanierFragment extends Fragment {
         binding = null;
     }
 
-    public void getroomdata(Context thiscontext,View root)
+    public void getpanierdata(Context thiscontext, View root)
     {
-
-        myDatabase =new Datamanager(thiscontext);
-
+        myDatabase =new DataManager(thiscontext);
         recview=root.findViewById(R.id.recview);
         recview.setLayoutManager(new LinearLayoutManager(thiscontext));
-
         List<Vente> ventes=myDatabase.getallVentes();
-
         PanierAdapter adapter=new PanierAdapter(ventes, rateview);
         recview.setAdapter(adapter);
-
         int i;
         Double sum=0.0;
         for(i=0;i< ventes.size();i++)
             sum=sum+(ventes.get(i).getProduit().getPrix_vente());
-
-        rateview.setText("Total Amount : "+sum+"€");
+        rateview.setText("Total : "+sum+"€");
     }
 }

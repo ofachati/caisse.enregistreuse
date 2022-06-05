@@ -18,14 +18,14 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-public class Datamanager extends SQLiteOpenHelper {
+public class DataManager extends SQLiteOpenHelper {
 
     private static final String databasename="produit.db";
     private static final int databaseversion=1;
 
 
 
-    public Datamanager(Context context){
+    public DataManager(Context context){
         super(context, databasename, null, databaseversion);
     }
     @Override
@@ -35,6 +35,15 @@ public class Datamanager extends SQLiteOpenHelper {
         sqLiteDatabase.execSQL("DROP TABLE IF EXISTS Produit;");
         sqLiteDatabase.execSQL("create table Produit(id_produit INTEGER primary key autoincrement,nom TEXT not null,description TEXT not null,prix_achat REAL not null,prix_vente REAL not null, quantite INTEGER not null,image TEXT not null)");
         sqLiteDatabase.execSQL("create table Vente(id_vente INTEGER primary key autoincrement,id_produit INTEGER not null,date TEXT not null,etat TEXT not null,FOREIGN KEY(id_produit) REFERENCES Produit(id_produit))");
+        sqLiteDatabase.execSQL("CREATE TRIGGER  QuantiteUpdate\n" +
+                "        AFTER UPDATE OF etat\n" +
+                "        ON Vente\n" +
+                "        BEGIN\n" +
+                "        UPDATE Produit\n" +
+                "        SET quantite = Produit.quantite - 1\n" +
+                "        WHERE produit.id_produit = New.id_produit ;\n" +
+                "        END;");
+
         Log.i("database", "onCreate invoked ");
     }
 
@@ -68,10 +77,10 @@ public class Datamanager extends SQLiteOpenHelper {
     }
 //******  Rechecrche  ************************//
 @SuppressLint("Range")
-public List<Produit> rechercher(String text) {
+public List<Produit> rechercher(String nomProduit) {
 
     SQLiteDatabase db = getReadableDatabase();
-    Cursor c = db.rawQuery("SELECT * FROM Produit WHERE nom LIKE '"+text+"%'" , null);
+    Cursor c = db.rawQuery("SELECT * FROM Produit WHERE nom LIKE '%"+nomProduit+"%'" , null);
     List<Produit> produitList = new ArrayList<Produit>();
 
     if (c.moveToFirst()) {
@@ -95,37 +104,12 @@ public List<Produit> rechercher(String text) {
 }
 
 
-    //******  getallProducts  ************************//
+    //******  getProducts  ************************//
     @SuppressLint("Range")
-    public List<Produit> getProducts(String string) {
+    public List<Produit> getProducts(String requete) {
         List<Produit> produitList = new ArrayList<Produit>();
         SQLiteDatabase db = getReadableDatabase();
-        Cursor c = db.rawQuery(string, null);
-        if (c.moveToFirst()) {
-            do {
-                Produit produit = new Produit(  c.getInt(c.getColumnIndex("id_produit")),
-                        c.getString(c.getColumnIndex("nom")),
-                        c.getString(c.getColumnIndex("description")),
-                        c.getDouble(c.getColumnIndex("prix_achat")),
-                        c.getDouble(c.getColumnIndex("prix_vente")),
-                        c.getInt(c.getColumnIndex("quantite")),
-                        c.getString(c.getColumnIndex("image")));
-                //produit.setId(c.getInt(c.getColumnIndex("yourcolumnname")));
-                //produit.setTitulo(c.getString(c.getColumnIndex("yourcolumnname")));
-                //produit.setTexto(c.getString(c.getColumnIndex("yourcolumnname")));
-                //produit.setTipo(c.getString(c.getColumnIndex("yourcolumnname")));
-                produitList.add(produit);
-            } while (c.moveToNext());
-        }
-        return produitList;
-    }
-
-    //******  getallProducts  ************************//
-    @SuppressLint("Range")
-    public List<Produit> getoneProducts() {
-        List<Produit> produitList = new ArrayList<Produit>();
-        SQLiteDatabase db = getReadableDatabase();
-        Cursor c = db.rawQuery("SELECT * FROM Vente INNER JOIN Produit ON Produit.id_produit = Vente.id_produit GROUP BY nom ORDER BY SUM(prix_vente) desc limit 1;", null);
+        Cursor c = db.rawQuery(requete, null);
         if (c.moveToFirst()) {
             do {
                 Produit produit = new Produit(  c.getInt(c.getColumnIndex("id_produit")),
@@ -187,7 +171,7 @@ public void supprimer(int id_vente) {
 
 //******   requete_au_choix ************************//
 @SuppressLint("Range")
-    public String requete_au_choix(String requete ) {
+    public String get_stat(String requete ) {
         SQLiteDatabase db = getReadableDatabase();
         Cursor c = db.rawQuery(requete, null);
         String stats = null;
@@ -209,4 +193,6 @@ public void vendre() {
         s.printStackTrace();
     }
     sql.close();
-}}
+}
+
+}

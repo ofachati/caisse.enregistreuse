@@ -16,9 +16,8 @@
         <ImageView
             android:layout_width="120dp"
             android:layout_height="120dp"
-            android:layout_centerHorizontal="true"
-            android:layout_centerVertical="true"
-            android:background="@drawable/ic_cart" />
+            android:layout_centerInParent="true"
+            android:background="@drawable/ic_caisseenregistreuse" />
 
     </RelativeLayout>
 
@@ -46,8 +45,7 @@
             android:layout_marginTop="25dp"
             android:text="Veuillez entrer votre numero"
             android:textAppearance="@style/Base.TextAppearance.AppCompat.Headline"
-            android:textColor="@color/colorPrimary"
-            />
+            android:textColor="@color/colorPrimary" />
 
         <EditText
             android:id="@+id/phone"
@@ -61,7 +59,6 @@
             android:drawablePadding="10dp"
             android:hint="enter your mobile number"
             android:inputType="phone"
-            android:maxLength="10"
             android:text="+212" />
 
         <Button
@@ -85,7 +82,7 @@
             android:background="@drawable/search_bg"
             android:digits="0123456789"
             android:drawablePadding="10dp"
-            android:hint="enter le code recu par message"
+            android:hint=" enter le code recu par message"
             android:inputType="phone"
             android:maxLength="10" />
 
@@ -107,7 +104,7 @@
             android:layout_height="wrap_content"
             android:layout_below="@+id/btnverifyOTP"
             android:layout_centerHorizontal="true"
-            android:visibility="invisible"/>
+            android:visibility="invisible" />
     </RelativeLayout>
 
 </RelativeLayout>

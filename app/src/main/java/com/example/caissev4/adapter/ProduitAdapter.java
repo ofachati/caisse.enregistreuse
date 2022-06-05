@@ -2,23 +2,19 @@ package com.example.caissev4.adapter;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
-import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.drawable.BitmapDrawable;
-import android.graphics.drawable.Drawable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.caissev4.Datamanager;
-import com.example.caissev4.ProductActivity;
+import com.example.caissev4.DataManager;
 import com.example.caissev4.R;
 import com.example.caissev4.model.Produit;
 
@@ -29,7 +25,7 @@ public class ProduitAdapter extends RecyclerView.Adapter<ProduitAdapter.ProduitV
 
     Context context;
     List<Produit> produitList;
-    Datamanager myDatabase ;
+    DataManager myDatabase ;
 
 
     public ProduitAdapter(Context context, List<Produit> produitList) {
@@ -51,17 +47,17 @@ public class ProduitAdapter extends RecyclerView.Adapter<ProduitAdapter.ProduitV
 
         holder.name.setText(produitList.get(position).getName());
         holder.description.setText(produitList.get(position).getDescription());
-        holder.price.setText(String.valueOf(produitList.get(position).getPrix_vente()));
+        holder.price.setText(String.valueOf(produitList.get(position).getPrix_vente()) + " €");
         holder.qty.setText(String.valueOf(produitList.get(position).getQuantity()));
 
-        File imgFile = new  File(produitList.get(position).getBigimageurl());
+        File imgFile = new  File(produitList.get(position).getImage_path());
         if(imgFile.exists()){
             Bitmap myBitmap = BitmapFactory.decodeFile(imgFile.getAbsolutePath());
             BitmapDrawable ob = new BitmapDrawable(myBitmap);
             holder.bg.setBackground(ob);
         }
 
-        myDatabase =new Datamanager(context);
+        myDatabase =new DataManager(context);
 
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -90,7 +86,6 @@ public class ProduitAdapter extends RecyclerView.Adapter<ProduitAdapter.ProduitV
             description = itemView.findViewById(R.id.description);
             price = itemView.findViewById(R.id.price);
             qty = itemView.findViewById(R.id.qty);
-            unit = itemView.findViewById(R.id.unit);
             bg = itemView.findViewById(R.id.recently_layout);
 
         }

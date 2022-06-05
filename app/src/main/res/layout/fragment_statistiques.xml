@@ -25,7 +25,7 @@
 
 
     <ImageView
-        android:id="@+id/imageView2"
+        android:id="@+id/img_LogOut"
         android:layout_width="31dp"
         android:layout_height="24dp"
         android:layout_marginEnd="16dp"

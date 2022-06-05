@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ProductActivity">
+    tools:context=".AddProduitActivity">
 
 
 
@@ -38,7 +38,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/back2"
-        app:srcCompat="@drawable/addpicture" />
+        app:srcCompat="@drawable/ic_addpicture" />
 
 
     <EditText
@@ -49,7 +49,7 @@
         android:background="@drawable/search_bg"
         android:ems="10"
         android:fontFamily="@font/open_sans_bold"
-        android:hint="Nom du produit"
+        android:hint=" Nom du produit"
         android:inputType="textPersonName"
         android:textSize="14sp"
         app:layout_constraintStart_toStartOf="@+id/big_image"
@@ -63,7 +63,7 @@
         android:background="@drawable/search_bg"
         android:ems="10"
         android:fontFamily="@font/open_sans_bold"
-        android:hint="Description"
+        android:hint=" Description"
         android:inputType="textPersonName"
         android:textSize="14sp"
         app:layout_constraintEnd_toEndOf="@+id/edittext_QtyProduit"
@@ -77,8 +77,8 @@
         android:background="@drawable/search_bg"
         android:ems="10"
         android:fontFamily="@font/open_sans_bold"
-        android:hint="Prix de vente"
-        android:inputType="number"
+        android:hint=" Prix de vente"
+        android:inputType="numberDecimal"
         android:textSize="14sp"
         app:layout_constraintBottom_toBottomOf="@+id/edittext_PrixAchat"
         app:layout_constraintEnd_toEndOf="@+id/edittext_DescProduit"
@@ -93,7 +93,7 @@
         android:background="@drawable/search_bg"
         android:ems="10"
         android:fontFamily="@font/open_sans_bold"
-        android:hint="prix d'achat"
+        android:hint=" Prix d'achat"
         android:inputType="number"
         android:textSize="14sp"
         app:layout_constraintStart_toStartOf="@+id/edittext_DescProduit"
@@ -106,7 +106,7 @@
         android:background="@drawable/search_bg"
         android:ems="10"
         android:fontFamily="@font/open_sans_bold"
-        android:hint="quantité"
+        android:hint=" quantité"
         android:inputType="number"
         android:textSize="14sp"
         app:layout_constraintBottom_toBottomOf="@+id/edittext_TitreProduit"

@@ -43,7 +43,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v)
             {
-                /*
+
                 if(TextUtils.isEmpty(phone.getText().toString()))
                 {
                     Toast.makeText(MainActivity.this, "Entrer un numero de telephone valide.", Toast.LENGTH_SHORT).show();
@@ -53,10 +53,11 @@ public class MainActivity extends AppCompatActivity {
                     bar.setVisibility(View.VISIBLE);
                     sendverificationcode(number);
                 }
-                */
 
+/*
                 startActivity(new Intent(MainActivity.this, NavigationActivity.class));
                 finish();
+*/
             }
         });
         btnverify.setOnClickListener(new View.OnClickListener() {
