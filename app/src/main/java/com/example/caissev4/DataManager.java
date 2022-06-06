@@ -20,21 +20,19 @@ import java.util.List;
 
 public class DataManager extends SQLiteOpenHelper {
 
-    private static final String databasename="produit.db";
-    private static final int databaseversion=1;
-
-
 
     public DataManager(Context context){
-        super(context, databasename, null, databaseversion);
+        super(context, "produit.db", null, 1);
     }
     @Override
     public void onCreate(SQLiteDatabase sqLiteDatabase) {
 
 
-        sqLiteDatabase.execSQL("DROP TABLE IF EXISTS Produit;");
+
+        //Creation des tables
         sqLiteDatabase.execSQL("create table Produit(id_produit INTEGER primary key autoincrement,nom TEXT not null,description TEXT not null,prix_achat REAL not null,prix_vente REAL not null, quantite INTEGER not null,image TEXT not null)");
         sqLiteDatabase.execSQL("create table Vente(id_vente INTEGER primary key autoincrement,id_produit INTEGER not null,date TEXT not null,etat TEXT not null,FOREIGN KEY(id_produit) REFERENCES Produit(id_produit))");
+        //creation des trigger
         sqLiteDatabase.execSQL("CREATE TRIGGER  QuantiteUpdate\n" +
                 "        AFTER UPDATE OF etat\n" +
                 "        ON Vente\n" +
@@ -50,8 +48,7 @@ public class DataManager extends SQLiteOpenHelper {
     @Override
     public void onUpgrade(SQLiteDatabase sqLiteDatabase, int i, int i1) {}
 
-
-//********** Insertion table produit **************************
+//Insertion :table Produit
     public void inserer_produit(String nom, String description, double prix_achat,double prix_vente, int quantite, String image) {
         SQLiteDatabase sql = getWritableDatabase();
         try {
@@ -60,22 +57,11 @@ public class DataManager extends SQLiteOpenHelper {
         } catch (SQLiteException s) {
             s.printStackTrace();
         }
-
         sql.close();
     }
 
-//********** Insertion table vente **************************
-    public void ajout_dans_catalogue(int id_produit) {
-        SQLiteDatabase sql = getWritableDatabase();
-        try {
-            sql.execSQL("INSERT INTO Vente (id_produit,date,etat) VALUES ('" + id_produit + "' , DATE('now'),'en cours')" );
-            Log.i("database", "insert");
-        } catch (SQLiteException s) {
-            s.printStackTrace();
-        }
-        sql.close();
-    }
-//******  Rechecrche  ************************//
+
+// Recherche : table Produit
 @SuppressLint("Range")
 public List<Produit> rechercher(String nomProduit) {
 
@@ -92,10 +78,6 @@ public List<Produit> rechercher(String nomProduit) {
                                             c.getDouble(c.getColumnIndex("prix_vente")),
                                             c.getInt(c.getColumnIndex("quantite")),
                                             c.getString(c.getColumnIndex("image")));
-            //produit.setId(c.getInt(c.getColumnIndex("yourcolumnname")));
-            //produit.setTitulo(c.getString(c.getColumnIndex("yourcolumnname")));
-            //produit.setTexto(c.getString(c.getColumnIndex("yourcolumnname")));
-            //produit.setTipo(c.getString(c.getColumnIndex("yourcolumnname")));
             produitList.add(produit);
         } while (c.moveToNext());
     }
@@ -104,7 +86,7 @@ public List<Produit> rechercher(String nomProduit) {
 }
 
 
-    //******  getProducts  ************************//
+// recuperer des produits selon la requete donnée : table Produit
     @SuppressLint("Range")
     public List<Produit> getProducts(String requete) {
         List<Produit> produitList = new ArrayList<Produit>();
@@ -119,18 +101,29 @@ public List<Produit> rechercher(String nomProduit) {
                         c.getDouble(c.getColumnIndex("prix_vente")),
                         c.getInt(c.getColumnIndex("quantite")),
                         c.getString(c.getColumnIndex("image")));
-                //produit.setId(c.getInt(c.getColumnIndex("yourcolumnname")));
-                //produit.setTitulo(c.getString(c.getColumnIndex("yourcolumnname")));
-                //produit.setTexto(c.getString(c.getColumnIndex("yourcolumnname")));
-                //produit.setTipo(c.getString(c.getColumnIndex("yourcolumnname")));
                 produitList.add(produit);
             } while (c.moveToNext());
         }
+        db.close();
         return produitList;
     }
 
 
-    //******  getall Ventes  ************************//
+
+//Insertion :table Vente
+    public void ajout_dans_catalogue(int id_produit) {
+        SQLiteDatabase sql = getWritableDatabase();
+        try {
+            sql.execSQL("INSERT INTO Vente (id_produit,date,etat) VALUES ('" + id_produit + "' , DATE('now'),'en cours')" );
+            Log.i("database", "insert");
+        } catch (SQLiteException s) {
+            s.printStackTrace();
+        }
+        sql.close();
+    }
+
+
+//Recuperer tout les ventes : table Vente
     @SuppressLint("Range")
     public List<Vente> getallVentes() {
         String strSql = "select * FROM Vente INNER JOIN Produit ON Produit.id_produit = Vente.id_produit WHERE etat='en cours'";
@@ -150,15 +143,17 @@ public List<Produit> rechercher(String nomProduit) {
                 produitList.add(vente);
             } while (c.moveToNext());
         }
+        db.close();
         return produitList;
 
     }
-//*********************  Supprimer *********************************//
-public void supprimer(int id_vente) {
+
+//Supprimer
+public void supprimer(String requete) {
     SQLiteDatabase sql = getWritableDatabase();
 
     try {
-        sql.execSQL("DELETE FROM Vente WHERE id_vente = " + id_vente);
+        sql.execSQL(requete);
 
     } catch (SQLiteException s) {
         s.printStackTrace();
@@ -167,9 +162,21 @@ public void supprimer(int id_vente) {
     sql.close();
 }
 
+//Checkout des produits qui exitent dans le panier (mise a jour de leur etat (vendu -> en cours)) : table Vente
+    public void vendre() {
+        SQLiteDatabase sql = getWritableDatabase();
+        try {
+            sql.execSQL("UPDATE Vente SET etat ='vendu' WHERE etat='en cours'" );
+            Log.i("database", "insert");
+        } catch (SQLiteException s) {
+            s.printStackTrace();
+        }
+        sql.close();
+    }
 
 
-//******   requete_au_choix ************************//
+
+//Recuperer les statistiques
 @SuppressLint("Range")
     public String get_stat(String requete ) {
         SQLiteDatabase db = getReadableDatabase();
@@ -183,16 +190,5 @@ public void supprimer(int id_vente) {
     }
 
 
-//*********************   *********************************//
-public void vendre() {
-    SQLiteDatabase sql = getWritableDatabase();
-    try {
-        sql.execSQL("UPDATE Vente SET etat ='vendu' WHERE etat='en cours'" );
-        Log.i("database", "insert");
-    } catch (SQLiteException s) {
-        s.printStackTrace();
-    }
-    sql.close();
-}
 
 }

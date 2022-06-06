@@ -6,6 +6,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
 import android.widget.TextView;
+import android.widget.Toast;
+
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -50,10 +52,11 @@ public class PanierAdapter extends RecyclerView.Adapter<PanierAdapter.PanierView
            @Override
            public void onClick(View view) {
 
-               myDatabase.supprimer(liste_ventes.get(position).getId_vente());
+               myDatabase.supprimer("DELETE FROM Vente WHERE id_vente = "+liste_ventes.get(position).getId_vente()) ;
                liste_ventes.remove(position);
                notifyItemRemoved(position);
                updateprice();
+               Toast.makeText(view.getContext(), "Produit Supprimé", Toast.LENGTH_SHORT).show();
            }
        });
     }

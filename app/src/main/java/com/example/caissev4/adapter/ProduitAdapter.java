@@ -8,7 +8,9 @@ import android.graphics.drawable.BitmapDrawable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.constraintlayout.widget.ConstraintLayout;
@@ -37,13 +39,11 @@ public class ProduitAdapter extends RecyclerView.Adapter<ProduitAdapter.ProduitV
     @Override
     public ProduitViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(context).inflate(R.layout.produit_items, parent, false);
-
         return new ProduitViewHolder(view);
     }
 
-    @SuppressLint("ResourceAsColor")
     @Override
-    public void onBindViewHolder(@NonNull ProduitViewHolder holder, @SuppressLint("RecyclerView") final int position) {//hna bdlt chi haja
+    public void onBindViewHolder(@NonNull ProduitViewHolder holder, @SuppressLint("RecyclerView") final int position) {
 
         holder.name.setText(produitList.get(position).getName());
         holder.description.setText(produitList.get(position).getDescription());
@@ -58,13 +58,33 @@ public class ProduitAdapter extends RecyclerView.Adapter<ProduitAdapter.ProduitV
         }
 
         myDatabase =new DataManager(context);
+        holder.image_panier.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
 
-        holder.itemView.setOnClickListener(new View.OnClickListener() {
+                myDatabase.ajout_dans_catalogue(produitList.get(position).getId());
+                Toast.makeText(view.getContext(), "Produit ajouté dans le panier", Toast.LENGTH_SHORT).show();
+
+
+            }
+        });
+        /*        holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
 
                 myDatabase.ajout_dans_catalogue(produitList.get(position).getId());
 
+            }
+        });*/
+
+        holder.image_delete.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                myDatabase.supprimer("DELETE FROM Produit WHERE id_produit = "+produitList.get(position).getId()) ;
+                produitList.remove(position);
+                notifyItemRemoved(position);
+                Toast.makeText(view.getContext(), "le produit a été supprimé", Toast.LENGTH_SHORT).show();
             }
         });
     }
@@ -78,6 +98,7 @@ public class ProduitAdapter extends RecyclerView.Adapter<ProduitAdapter.ProduitV
 
         TextView name, description, price, qty, unit;
         ConstraintLayout bg;
+        ImageView image_panier,image_delete;
 
         public ProduitViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -86,8 +107,9 @@ public class ProduitAdapter extends RecyclerView.Adapter<ProduitAdapter.ProduitV
             description = itemView.findViewById(R.id.description);
             price = itemView.findViewById(R.id.price);
             qty = itemView.findViewById(R.id.qty);
-            bg = itemView.findViewById(R.id.recently_layout);
-
+            bg = itemView.findViewById(R.id.produit_layout);
+            image_panier= itemView.findViewById(R.id.imageView_cart);
+            image_delete= itemView.findViewById(R.id.imageView_delete);
         }
     }
 

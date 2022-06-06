@@ -48,51 +48,23 @@ public class CatalogueFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
 
-        //---
-        thiscontext = container.getContext();
-        myDatabase =new DataManager(thiscontext);
-        //-----
 
         homeViewModel =
                 new ViewModelProvider(this).get(CatalogueViewModel.class);
 
         binding = FragmentCatalogueBinding.inflate(inflater, container, false);
         View root = binding.getRoot();
-        /*
-        final TextView textView = binding.textHome;
-        homeViewModel.getText().observe(getViewLifecycleOwner(), new Observer<String>() {
-            @Override
-            public void onChanged(@Nullable String s) {
-                textView.setText(s);
-            }
-        });
-        */
-        //---------------------------
 
-
-        //hna zdt root ..........................................................................  !!!
-        //allCategory = root.findViewById(R.id.allCategoryImage);
         produitRecycler = root.findViewById(R.id.recently_item);
-
-        /*
-        allCategory.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent i = new Intent(getActivity(), Category.class);//////// badlt chi haja wach ratkhdm? + bdlt allcatergorie b categorie
-                startActivity(i);
-            }
-        });
-*/
+        thiscontext = container.getContext();
+        myDatabase =new DataManager(thiscontext);
 
 
-        // adding data to model
+
+        //recupérer les données et remplir RecyclerView
         produitList =myDatabase.getProducts("SELECT * FROM Produit");
-
-
-
         setProduitRecycler(produitList,thiscontext);
 
-        //
 
         //aller a la vue add produit
         btn_AddProduit = root.findViewById(R.id.btn_AddProduit);
@@ -145,7 +117,7 @@ public class CatalogueFragment extends Fragment {
 
 
 
-
+//remplir RecyclerView
     private void setProduitRecycler(List<Produit> produitDataList, Context thiscontext) {
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(thiscontext, LinearLayoutManager.HORIZONTAL, false);
         produitRecycler.setLayoutManager(layoutManager);

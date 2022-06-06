@@ -79,8 +79,8 @@ public class AddProduitActivity extends AppCompatActivity {
             }
         });
 
-        //
-        //***************** insertion dans la base de données SQlite  ******************
+
+// Insertion du vente dans la base de données apres le clique sur le bouton CheckOut
         buttonInserer.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -89,20 +89,11 @@ public class AddProduitActivity extends AppCompatActivity {
                 String prixVente = edittext_prixVente.getText().toString();
                 String prixAchat = edittext_prixAchat.getText().toString();
                 String quantite = edittext_quantite.getText().toString();
-                //tv.setText("Ajouté");
                 if (!(TextUtils.isEmpty(nom) || TextUtils.isEmpty(description) || TextUtils.isEmpty(prixVente) || TextUtils.isEmpty(prixAchat) || TextUtils.isEmpty(quantite))) {
                     try {
 
                         Drawable drawable = imageview_image.getDrawable();
                         Bitmap bitmap = ((BitmapDrawable)drawable).getBitmap();
-                        /*
-                        ByteArrayOutputStream stream = new ByteArrayOutputStream();
-                        bitmap.compress(Bitmap.CompressFormat.JPEG, 100, stream);
-                        byte[] imageInByte = stream.toByteArray();
-                        System.out.println("hahyaaa");
-                        System.out.println(Arrays.toString(imageInByte));
-*/
-
                         String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss", Locale.ENGLISH).format(new Date());
                         File pictureFile = new File("/sdcard/Android/media", "IMG_" + timeStamp + ".jpg");
                         FileOutputStream fos = new FileOutputStream(pictureFile);
@@ -116,6 +107,9 @@ public class AddProduitActivity extends AppCompatActivity {
                         Intent i = new Intent(AddProduitActivity.this, NavigationActivity.class);
                         startActivity(i);
                         finish();
+                        Toast.makeText(view.getContext(), "Produit ajouté", Toast.LENGTH_SHORT).show();
+
+
                     } catch (SQLiteException | IOException s) {
                         s.printStackTrace();
                     }
@@ -123,22 +117,12 @@ public class AddProduitActivity extends AppCompatActivity {
             }
         });
 
-
-
     }
 
 
 
 
-/*
-    //3 methode pour prendre la permission de la camera et enregistrer l'image dans imageview
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-        if (requestCode == 7 && resultCode == RESULT_OK) {
-            Bitmap bitmap = (Bitmap) data.getExtras().get("data");
-            imageview_image.setImageBitmap(bitmap);
-        }
-    }*/
+    //Demander la permission de l'utilisateur
     public void EnableRuntimePermission(){
         if (ActivityCompat.shouldShowRequestPermissionRationale(AddProduitActivity.this, Manifest.permission.CAMERA))
         {
@@ -146,26 +130,18 @@ public class AddProduitActivity extends AppCompatActivity {
         } else {
                 ActivityCompat.requestPermissions(AddProduitActivity.this,new String[]{Manifest.permission.CAMERA,Manifest.permission.READ_EXTERNAL_STORAGE,Manifest.permission.WRITE_EXTERNAL_STORAGE}, RequestPermissionCode);
         }
-/*
-        if (ActivityCompat.shouldShowRequestPermissionRationale(AddProduitActivity.this, Manifest.permission.WRITE_EXTERNAL_STORAGE))
-        {
-            Toast.makeText(AddProduitActivity.this," permission allows us to save images", Toast.LENGTH_LONG).show();
-        } else {
-            ActivityCompat.requestPermissions(AddProduitActivity.this,new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, RequestPermissionCode);
-        }
-*/
-
     }
 
+    //Message apres la permission
     @Override
     public void onRequestPermissionsResult(int RC, String per[], int[] PResult) {
         super.onRequestPermissionsResult(RC, per, PResult);
         switch (RC) {
             case RequestPermissionCode:
                 if (PResult.length > 0 && PResult[0] == PackageManager.PERMISSION_GRANTED) {
-                    Toast.makeText(AddProduitActivity.this, "Permission Granted, Now your application can access CAMERA.", Toast.LENGTH_LONG).show();
+                    Toast.makeText(AddProduitActivity.this, "Permission obtenu!", Toast.LENGTH_LONG).show();
                 } else {
-                    Toast.makeText(AddProduitActivity.this, "Permission Canceled, Now your application cannot access CAMERA.", Toast.LENGTH_LONG).show();
+                    Toast.makeText(AddProduitActivity.this, "Permission refusé!", Toast.LENGTH_LONG).show();
                 }
                 break;
         }
@@ -192,4 +168,17 @@ public class AddProduitActivity extends AppCompatActivity {
                 break;
         }
     }
+
+
+/*
+    //3 methode pour prendre la permission de la camera et enregistrer l'image dans imageview
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == 7 && resultCode == RESULT_OK) {
+            Bitmap bitmap = (Bitmap) data.getExtras().get("data");
+            imageview_image.setImageBitmap(bitmap);
+        }
+    }*/
+
+
 }

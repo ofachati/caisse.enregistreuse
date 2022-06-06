@@ -48,11 +48,8 @@ public class StatistiquesFragment extends Fragment {
         View root = binding.getRoot();
 
 
-        //---
         thiscontext = container.getContext();
         myDatabase =new DataManager(thiscontext);
-        //-----
-
 
 
         tv_NombreVente = (TextView) root.findViewById(R.id.tv_NombreVente);
@@ -70,6 +67,7 @@ public class StatistiquesFragment extends Fragment {
         tv_TotaleAchat.setText(myDatabase.get_stat("SELECT SUM(prix_achat) FROM Vente INNER JOIN Produit ON Produit.id_produit = Vente.id_produit WHERE etat='vendu'")+" €");
         tv_chiffreAffaire.setText(myDatabase.get_stat("SELECT SUM(prix_vente) FROM Vente INNER JOIN Produit ON Produit.id_produit = Vente.id_produit WHERE etat='vendu'")+" €");
 
+        //Recuperer le produit le plus vendu
         Produit produit= myDatabase.getProducts("SELECT * FROM Vente INNER JOIN Produit ON Produit.id_produit = Vente.id_produit GROUP BY nom ORDER BY COUNT(nom) desc limit 1;").get(0);
         tv_TopVendu.setText(produit.getName());
         File imgFile = new  File(produit.getImage_path());
@@ -79,6 +77,7 @@ public class StatistiquesFragment extends Fragment {
             iv_TopVendu.setImageDrawable(ob);
         }
 
+        //Recuperer le produit le plus rentable
         produit= myDatabase.getProducts("SELECT * FROM Vente INNER JOIN Produit ON Produit.id_produit = Vente.id_produit GROUP BY nom ORDER BY SUM(prix_vente)-SUM(prix_achat) desc limit 1;").get(0);
         tv_TopRentable.setText(produit.getName());
         imgFile = new  File(produit.getImage_path());

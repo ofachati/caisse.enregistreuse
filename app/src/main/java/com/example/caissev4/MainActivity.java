@@ -46,7 +46,7 @@ public class MainActivity extends AppCompatActivity {
 
                 if(TextUtils.isEmpty(phone.getText().toString()))
                 {
-                    Toast.makeText(MainActivity.this, "Entrer un numero de telephone valide.", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(MainActivity.this, "Entrer un numero de telephone valide", Toast.LENGTH_SHORT).show();
                 }
                 else {
                     String number = phone.getText().toString();
@@ -112,6 +112,7 @@ public class MainActivity extends AppCompatActivity {
             btnverify.setEnabled(true);
             bar.setVisibility(View.INVISIBLE);
         }};
+
     private void verifycode(String Code)
     {
         PhoneAuthCredential credential = PhoneAuthProvider.getCredential(verificationID,Code);

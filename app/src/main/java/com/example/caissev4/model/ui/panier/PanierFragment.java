@@ -9,6 +9,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
@@ -84,7 +85,7 @@ public class PanierFragment extends Fragment {
                 Intent i = new Intent(thiscontext, NavigationActivity.class);
                 startActivity(i);
                 getActivity().finish();
-
+                Toast.makeText(thiscontext, "La commande a été enregistrer", Toast.LENGTH_SHORT).show();
             }
         });
 
